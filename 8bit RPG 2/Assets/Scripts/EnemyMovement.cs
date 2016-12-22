@@ -10,11 +10,12 @@ public class EnemyMovement : MonoBehaviour {
     public float aggro_range;
     public float stopping_range;
     public bool is_following = false;
-    public GameObject following_who;
+    public GameObject following_who = null;
 
     public bool Debugger;
 
-	void Start () {
+	void Start ()
+    {
         rbody = GetComponent<Rigidbody2D>();
         circ_collide = GetComponent<CircleCollider2D>();
         circ_collide.radius = aggro_range;
@@ -39,21 +40,19 @@ public class EnemyMovement : MonoBehaviour {
         {
             //Rotates according to face player
             if (transform.position.x < following_who.transform.position.x)
-            {
-                transform.eulerAngles = new Vector3(0, 180, 0);
-
-            }
+                this.GetComponent<SpriteRenderer>().flipX = true;
             else
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-
-            }
+                this.GetComponent<SpriteRenderer>().flipX = false;
 
             //Moves enemy
             Vector2 distance = new Vector2(following_who.GetComponent<Rigidbody2D>().position.x - rbody.position.x, following_who.GetComponent<Rigidbody2D>().position.y - rbody.position.y);
             distance = distance.normalized;
 
-            rbody.position += distance * speed_multiplier * Time.deltaTime;
+            //Old movement stuff
+            //rbody.position += distance * speed_multiplier * Time.deltaTime;
+
+            //New movement stuff
+            rbody.velocity = distance * speed_multiplier;
 
         }
 
@@ -99,10 +98,7 @@ public class EnemyMovement : MonoBehaviour {
                 Debug.Log("Item " + thing.name + " exited the collider.");
 
                 if (thing.gameObject.tag == "Player")
-                {
                     Debug.Log("Item is player!");
-
-                }
 
             }
 

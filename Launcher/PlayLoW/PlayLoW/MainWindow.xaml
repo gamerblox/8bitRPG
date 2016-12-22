@@ -1,0 +1,32 @@
+﻿<Window x:Class="PlayLoW.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlayLoW"
+        mc:Ignorable="d"
+        Title="LoW: Origins" Height="720" Width="1080" ResizeMode="CanMinimize">
+    <Grid x:Name="LauncherWindow">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF170000" Offset="1"/>
+                <GradientStop Color="#FF641919"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label x:Name="label" Content="Legends of the Warriors: Origins" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="26.667" Foreground="#FFBF0000" BorderThickness="0" FontWeight="Bold"/>
+        <Label x:Name="label1" Content="Game Version: Alpha 0.7" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" FontSize="9.333" Foreground="#FFAC8500"/>
+        <WebBrowser Margin="10,72,10,10" Source="https://sites.google.com/site/loworiginsupdates/"/>
+        <Button x:Name="LaunchGame" Content="Launch Game" Margin="0,10,10,0" Click="button_Click" Background="#FF00E100" BorderThickness="5" BorderBrush="#FF00C900" FontSize="26.667" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="57" VerticalAlignment="Top" HorizontalAlignment="Right" Width="247">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-360"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Label x:Name="label1_Copy" Content="Launch Client Version: 1.0" HorizontalAlignment="Left" Margin="125,45,0,0" VerticalAlignment="Top" FontSize="9.333" Foreground="#FFAC8500"/>
+
+    </Grid>
+</Window>

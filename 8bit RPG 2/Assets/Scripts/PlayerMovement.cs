@@ -29,23 +29,21 @@ public class PlayerMovement : MonoBehaviour {
             anim.SetFloat("input_x", movement_vector.x);
             anim.SetFloat("input_y", movement_vector.y);
             if (movement_vector.x != 0 && movement_vector.y != 0)
-            {
                 speed_multiplier = speed_sideways_cut;
-            }
             else
-            {
                 speed_multiplier = orig_speed_mult;
-            }
 
         }
         else
-        {
             anim.SetBool("is_walking", false);
 
-        }
-
         //Actual movement stuff
-        rbody.MovePosition(rbody.position + movement_vector * Time.deltaTime * speed_multiplier);
+        //rbody.MovePosition(rbody.position + movement_vector * Time.deltaTime * speed_multiplier);
+
+        //New movement stuff
+        if (Input.GetButton("Vertical") || Input.GetButton("Horizontal"))
+            rbody.velocity = movement_vector * speed_multiplier;
 
     }
+
 }

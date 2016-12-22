@@ -1,0 +1,47 @@
+[
+	{
+		"id": 0,
+		"title": "Iron Sword",
+		"value": 1,
+		"stats": {
+			"type": "Weapon",
+			"power": 10,
+			"speed": 1.0,
+			"range": 0.5
+		},
+		"description": "A boring ol' iron sword. Kinda dusty.",
+		"rarity": "Not Rare",
+		"stackable": false,
+		"slug": "iron_sword"
+	},
+	{
+		"id": 1,
+		"title": "Gold Piece",
+		"value": 5,
+		"stats": {
+			"type": "Item",
+			"power": 0,
+			"speed": 0.0,
+			"range": 0.0
+		},
+		"description": "A tiny piece of gold. Neat!",
+		"rarity": "Rare",
+		"stackable": true,
+		"slug": "gold_piece"
+	},
+	{
+		"id": 2,
+		"title": "Shaera's Sword of The End",
+		"value": 1000000,
+		"stats": {
+			"type": "Weapon",
+			"power": 100,
+			"speed": 0.01,
+			"range": 2.5
+		},
+		"description": "This is The End.",
+		"rarity": "The One and Only",
+		"stackable": false,
+		"slug": "shaeras_sword"
+	}
+]
