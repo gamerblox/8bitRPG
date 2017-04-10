@@ -10,8 +10,11 @@ public class PlayerMovement : MonoBehaviour {
     float orig_speed_mult;
     float speed_sideways_cut;
 
+    public Vector2 movement_vector;
+    //public string dir_facing;
 
-	void Start () {
+
+    void Start () {
         rbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         orig_speed_mult = speed_multiplier;
@@ -20,7 +23,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-        Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         //Animation stuff
         if (movement_vector != new Vector2(0, 0))

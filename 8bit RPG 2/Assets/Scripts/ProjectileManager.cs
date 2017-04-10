@@ -7,21 +7,22 @@ public class ProjectileManager : MonoBehaviour {
     public int attack_power;
     public float attack_range;
     public float projectile_speed;
-    public string from;
+    public GameObject fromWho;
 
     //Other variables
     public bool can_start = false;
     Vector2 orig_pos;
+    Vector2 start_pos;
     Vector2 end_pos;
     public Rigidbody2D rbody;
 
-    public void SetUp(int a_p, float a_r, float p_s, string from_str)
+    public void SetUp(int a_p, float a_r, float p_s, GameObject from)
     {
         //Sets the values
         attack_power = a_p;
         attack_range = a_r;
         projectile_speed = p_s;
-        from = from_str;
+        fromWho = from;
         can_start = true;
 
     }
@@ -36,7 +37,6 @@ public class ProjectileManager : MonoBehaviour {
         float r = attack_range;
         float radian = (90 + transform.rotation.eulerAngles.z) * Mathf.Deg2Rad;
         end_pos = new Vector2(orig_pos.x + (r * Mathf.Cos(radian)), orig_pos.y + (r * Mathf.Sin(radian)));
-        //Debug.Log(end_pos);
 
     }
 
@@ -56,10 +56,10 @@ public class ProjectileManager : MonoBehaviour {
                 //Tests to see if next move frame is above attack_range and not at end_pos, if so then set next move frame at end_pos, else move one frame
                 if (Vector2.Distance(orig_pos, temp_transform) > attack_range && temp_transform != end_pos)
                 {
-                    transform.position = end_pos;
+                    rbody.MovePosition(end_pos);
 
                 }
-                else transform.position = temp_transform;
+                else rbody.MovePosition(temp_transform);//rbody.velocity = (Vector2)transform.up * projectile_speed;
 
             }
 
@@ -70,7 +70,7 @@ public class ProjectileManager : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D thing)
     {
         //Deals damage to enemy if projectile is from player, destroys on impact
-        if (from == "Player" && thing.gameObject.tag == "Enemy" && thing.GetType() == typeof(BoxCollider2D))
+        if (fromWho.tag == "Player" && thing.gameObject.tag == "Enemy" && thing.GetType() == typeof(BoxCollider2D))
         {
             thing.gameObject.GetComponent<HealthManager>().Damage(attack_power);
             Destroy(this.gameObject);
@@ -78,9 +78,24 @@ public class ProjectileManager : MonoBehaviour {
         }
         
         //Deals damage to player if projectile is from enemy, destroys on impact
-        if (from == "Enemy" && thing.gameObject.tag == "Player" && thing.GetType() == typeof(BoxCollider2D))
+        if (fromWho.tag == "Enemy" && thing.gameObject.tag == "Player" && thing.GetType() == typeof(BoxCollider2D))
         {
             thing.gameObject.GetComponent<HealthManager>().Damage(attack_power);
+            Destroy(this.gameObject);
+
+        }
+
+        //Deal damage to player if projectile is from enemy player, destroys on impact
+        if (fromWho.tag == "Player" && thing.gameObject.tag == "Player" && fromWho != thing.gameObject && thing.GetType() == typeof(BoxCollider2D))
+        {
+            thing.gameObject.GetComponent<HealthManager>().Damage(attack_power);
+            Destroy(this.gameObject);
+
+        }
+
+        //Destroys object on impact to wall
+        if (thing.gameObject.tag == "Wall" && thing.GetType() == typeof(PolygonCollider2D))
+        {
             Destroy(this.gameObject);
 
         }

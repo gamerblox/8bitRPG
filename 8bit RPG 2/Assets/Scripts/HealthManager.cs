@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour {
 
+    SoundManager sm;
+
     //Basic health variables
     public int max_health;
     public int health;
@@ -30,6 +32,8 @@ public class HealthManager : MonoBehaviour {
         hb_orig_color = health_bar.GetComponent<Image>().color;
         hb_orig_color.a = 1;
         popup_text = Resources.Load("Prefabs/Pop-Up Text") as GameObject;
+
+        sm = this.GetComponent<SoundManager>();
 
     }
 
@@ -132,6 +136,9 @@ public class HealthManager : MonoBehaviour {
         UpdateHealthBarGUI();
         DamageHealthBarGUI();
 
+        //Play hurt FX
+        sm.PlaySound(1);
+
         //Pops up the damage text
         GameObject instance = Instantiate(popup_text, transform.position, transform.rotation) as GameObject;
         instance.transform.SetParent(health_bar_parent.transform, false);
@@ -159,6 +166,9 @@ public class HealthManager : MonoBehaviour {
         else health = temp_health;
         UpdateHealthBarGUI();
         HealHealthBarGUI();
+
+        //Play heal FX
+        sm.PlaySound(2);
 
         //Pops up the heal text
         GameObject instance = Instantiate(popup_text, transform.position, transform.rotation) as GameObject;
