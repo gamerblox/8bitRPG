@@ -9,14 +9,29 @@
 			"speed": 1.0,
 			"range": 0.5
 		},
-		"description": "A boring ol' iron sword. Kinda dusty.",
-		"rarity": "Not Rare",
+		"description": "A boring ol' iron sword.\nKinda dusty.",
+		"rarity": "Semi-Rare",
 		"stackable": false,
 		"slug": "iron_sword"
 	},
 	{
 		"id": 1,
 		"title": "Gold Piece",
+		"value": 1,
+		"stats": {
+			"type": "Item",
+			"power": 0,
+			"speed": 0.0,
+			"range": 0.0
+		},
+		"description": "A tiny piece of gold.\nNeat!",
+		"rarity": "Common",
+		"stackable": true,
+		"slug": "gold_piece"
+	},
+	{
+		"id": 2,
+		"title": "Chest",
 		"value": 5,
 		"stats": {
 			"type": "Item",
@@ -24,13 +39,13 @@
 			"speed": 0.0,
 			"range": 0.0
 		},
-		"description": "A tiny piece of gold. Neat!",
+		"description": "A placeable chest.\n(Currently not placeable.)",
 		"rarity": "Rare",
-		"stackable": true,
-		"slug": "gold_piece"
+		"stackable": false,
+		"slug": "placeable_chest"
 	},
 	{
-		"id": 2,
+		"id": 100,
 		"title": "Shaera's Sword of The End",
 		"value": 1000000,
 		"stats": {

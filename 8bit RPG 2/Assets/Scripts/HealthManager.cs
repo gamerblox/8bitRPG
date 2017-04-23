@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour {
 
+    HealthFX hfx;
     SoundManager sm;
 
     //Basic health variables
@@ -22,8 +23,16 @@ public class HealthManager : MonoBehaviour {
     bool hb_damage = false;
 
     //Popup Text
-    public GameObject popup_text;
-    public GameObject health_bar_parent;
+    public GameObject PopupText;
+    public GameObject HealthTextParent;
+
+    //For other scripts to reference game time
+    public static HealthManager PlayerHealth;
+    public HealthManager()
+    {
+        PlayerHealth = this;
+
+    }
 
     //Sets up variables
     void Start()
@@ -31,8 +40,9 @@ public class HealthManager : MonoBehaviour {
         health = max_health;
         hb_orig_color = health_bar.GetComponent<Image>().color;
         hb_orig_color.a = 1;
-        popup_text = Resources.Load("Prefabs/Pop-Up Text") as GameObject;
+        PopupText = (GameObject)Resources.Load("Prefabs/Pop-Up Text");
 
+        hfx = this.GetComponent<HealthFX>();
         sm = this.GetComponent<SoundManager>();
 
     }
@@ -139,9 +149,12 @@ public class HealthManager : MonoBehaviour {
         //Play hurt FX
         sm.PlaySound(1);
 
+        //Make healthbar appear again, if not already
+        hfx.HbAppear();
+
         //Pops up the damage text
-        GameObject instance = Instantiate(popup_text, transform.position, transform.rotation) as GameObject;
-        instance.transform.SetParent(health_bar_parent.transform, false);
+        GameObject instance = Instantiate(PopupText, transform.position, transform.rotation);
+        instance.transform.SetParent(HealthTextParent.transform, false);
         instance.GetComponent<RectTransform>().localPosition = Vector2.zero;
 
         string temp = "-";
@@ -151,6 +164,7 @@ public class HealthManager : MonoBehaviour {
         //Prepares if death happended
         if (health <= 0)
         {
+            health = 0;
             Die();
 
         }
@@ -171,8 +185,8 @@ public class HealthManager : MonoBehaviour {
         sm.PlaySound(2);
 
         //Pops up the heal text
-        GameObject instance = Instantiate(popup_text, transform.position, transform.rotation) as GameObject;
-        instance.transform.SetParent(health_bar_parent.transform, false);
+        GameObject instance = Instantiate(PopupText, transform.position, transform.rotation);
+        instance.transform.SetParent(HealthTextParent.transform, false);
         instance.GetComponent<RectTransform>().localPosition = Vector2.zero;
 
         string temp = "+";

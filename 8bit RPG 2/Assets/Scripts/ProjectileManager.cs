@@ -8,6 +8,7 @@ public class ProjectileManager : MonoBehaviour {
     public float attack_range;
     public float projectile_speed;
     public GameObject fromWho;
+    private string _strFromWho;
 
     //Other variables
     public bool can_start = false;
@@ -32,6 +33,7 @@ public class ProjectileManager : MonoBehaviour {
         //Sets the values
         rbody = GetComponent<Rigidbody2D>();
         orig_pos = transform.position;
+        _strFromWho = fromWho.tag;
 
         //Gets end_pos
         float r = attack_range;
@@ -69,27 +71,34 @@ public class ProjectileManager : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D thing)
     {
+        //Return immediatly if entity trying to hit is null. kinda redundant but a precaution
+        if (thing.gameObject == null)
+            return;
+
         //Deals damage to enemy if projectile is from player, destroys on impact
-        if (fromWho.tag == "Player" && thing.gameObject.tag == "Enemy" && thing.GetType() == typeof(BoxCollider2D))
+        if (_strFromWho == "Player" && thing.gameObject.tag == "Enemy" && thing.GetType() == typeof(BoxCollider2D))
         {
             thing.gameObject.GetComponent<HealthManager>().Damage(attack_power);
             Destroy(this.gameObject);
+            return;
 
         }
         
         //Deals damage to player if projectile is from enemy, destroys on impact
-        if (fromWho.tag == "Enemy" && thing.gameObject.tag == "Player" && thing.GetType() == typeof(BoxCollider2D))
+        if (_strFromWho == "Enemy" && thing.gameObject.tag == "Player" && thing.GetType() == typeof(BoxCollider2D))
         {
             thing.gameObject.GetComponent<HealthManager>().Damage(attack_power);
             Destroy(this.gameObject);
+            return;
 
         }
 
         //Deal damage to player if projectile is from enemy player, destroys on impact
-        if (fromWho.tag == "Player" && thing.gameObject.tag == "Player" && fromWho != thing.gameObject && thing.GetType() == typeof(BoxCollider2D))
+        if (_strFromWho == "Player" && thing.gameObject.tag == "Player" && fromWho != thing.gameObject && thing.GetType() == typeof(BoxCollider2D))
         {
             thing.gameObject.GetComponent<HealthManager>().Damage(attack_power);
             Destroy(this.gameObject);
+            return;
 
         }
 
@@ -97,6 +106,7 @@ public class ProjectileManager : MonoBehaviour {
         if (thing.gameObject.tag == "Wall" && thing.GetType() == typeof(PolygonCollider2D))
         {
             Destroy(this.gameObject);
+            return;
 
         }
 
